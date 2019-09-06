@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """
 AESの暗号処理で使用するキーを生成する。
@@ -24,17 +23,16 @@ See Also
 from pathlib import Path
 from Crypto.Random import get_random_bytes
 from os import _exit, chmod, mkdir
-
+from constants import KEY_STORE
 
 # 変数定義
 # ------------------------------------------------------------------------------
-key_store_path = str(Path.home()) + "/.secret"         # keyfile のディレクトリ設定
-key_store = key_store_path + "/keyfile"                # keyfile のフルパス設定
+KEY_STORE_PATH = str(Path(KEY_STORE).parent)        # keyfile のディレクトリ設定
 
 # ディレクトリ作成
 # ------------------------------------------------------------------------------
-if not Path(key_store_path).exists():
-    mkdir(key_store_path, 0o0700)
+if not Path(KEY_STORE_PATH).exists():
+    mkdir(KEY_STORE_PATH, 0o0700)
 
 # 暗号キーの生成
 # ------------------------------------------------------------------------------
@@ -44,7 +42,7 @@ key = get_random_bytes(32)
 # 暗号キーの keyfile への書込
 # ------------------------------------------------------------------------------
 try:
-    with open(key_store, "wb") as key_out:
+    with open(KEY_STORE, "wb") as key_out:
         key_out.write(key)
 
 # get_random_bytes が NG のとき key のタイプが str の例外
@@ -59,4 +57,4 @@ except PermissionError as err:
 
 # パーミッション変更
 # ------------------------------------------------------------------------------
-chmod(key_store, 0o0600)
+chmod(KEY_STORE, 0o0600)
