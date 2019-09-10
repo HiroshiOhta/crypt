@@ -62,6 +62,7 @@ except TypeError as err:
 except PermissionError as err:
     print(err)
     exit(2)
+
 else:
     # パーミッション変更
     chmod(KEY_STORE, 0o0600)
