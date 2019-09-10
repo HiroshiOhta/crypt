@@ -20,14 +20,21 @@ See Also
 ファイル名 : ~/.secret/keyfile
 """
 
+# 標準ライブラリ
+from os import chmod, mkdir
 from pathlib import Path
+from sys import exit
+
+# サードパーティライブラリ
 from Crypto.Random import get_random_bytes
-from os import _exit, chmod, mkdir
+
+# ローカルなライブラリ
 from constants import KEY_STORE
 
 # 変数定義
 # ------------------------------------------------------------------------------
-KEY_STORE_PATH = str(Path(KEY_STORE).parent)        # keyfile のディレクトリ設定
+# keyfile のディレクトリ設定
+KEY_STORE_PATH = str(Path(KEY_STORE).parent)
 
 # ディレクトリ作成
 # ------------------------------------------------------------------------------
@@ -42,19 +49,21 @@ key = get_random_bytes(32)
 # 暗号キーの keyfile への書込
 # ------------------------------------------------------------------------------
 try:
+    # 暗号キーの keyfile への書込
     with open(KEY_STORE, "wb") as key_out:
         key_out.write(key)
 
 # get_random_bytes が NG のとき key のタイプが str の例外
 except TypeError as err:
     print(err)
-    _exit(1)
+    exit(1)
 
 # key_file のパーミッションが正しくない場合の例外
 except PermissionError as err:
     print(err)
-    _exit(2)
+    exit(2)
+else:
+    # パーミッション変更
+    chmod(KEY_STORE, 0o0600)
 
-# パーミッション変更
-# ------------------------------------------------------------------------------
-chmod(KEY_STORE, 0o0600)
+exit(0)
