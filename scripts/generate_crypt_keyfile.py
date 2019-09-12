@@ -18,8 +18,8 @@ def gen_crypt_key(key_store_file: str = KEY_STORE) -> int:
 
     Parameters
     ----------
-    str
-        AES暗号処理で使用するキーを保存するファイルパス
+    key_store_file : str, optional
+        AES暗号処理で使用するキーを保存するファイルパス (default KEY_STORE)
 
     Returns
     -------
