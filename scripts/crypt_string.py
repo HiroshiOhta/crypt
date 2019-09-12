@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
 # 標準ライブラリ
-# from os import chmod, mkdir
-from pathlib import Path
 from base64 import b64encode, b64decode
+from pathlib import Path
 from sys import exit, argv
 
 # サードパーティライブラリ
